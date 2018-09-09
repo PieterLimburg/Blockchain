@@ -21,13 +21,16 @@ class Blockchain:
         return self.chain[-1]
 
     def proof_of_work(self, prevProof):
+        start = datetime.datetime.now()
         newProof = 1
         checkProof = False
         while checkProof == False:
             hashOperation = hashlib.sha256(str(newProof**2 - prevProof**2).encode()).hexdigest()
             if hashOperation[:4] == '0000':
                 checkProof = True
+                end = datetime.datetime.now()
                 print('SUCCESS! This is the correct Hash Operation: ' + hashOperation)
+                print('Time elapsed: ' + str((end.microsecond - start.microsecond)/1000) + ' ms')
             else:
                 newProof +=1
         return newProof
